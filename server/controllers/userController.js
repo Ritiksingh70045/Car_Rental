@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -5,8 +7,9 @@ import Car from "../models/Car.js";
 
 // Generate JWT Token
 const generateToken = (userId) => {
-  const payload = userId;
-  return jwt.sign(payload, process.env.JWT_SECRET);
+  const payload = {id : userId};
+  return jwt.sign(payload, process.env.JWT_SECRET , {
+    expiresIn: process.env.JWT_EXPIRY });
 };
 
 // Register User
@@ -15,7 +18,7 @@ export const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password || password.length < 8) {
-      return res.json({ success: false, message: "Fill all the fields" });
+      return res.json({ success: false, message: "Fill all the fields and password must be at least 8 characters long" });
     }
 
     const userExists = await User.findOne({ email });    // give the first parameter as an object

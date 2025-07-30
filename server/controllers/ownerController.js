@@ -1,4 +1,4 @@
-import imagekit from "../configs/imageKit.js";
+import {cloudinary} from "../configs/cloudinary.js";
 import Booking from "../models/Booking.js";
 import Car from "../models/Car.js";
 import User from "../models/User.js";
@@ -24,25 +24,23 @@ export const addCar = async (req, res) => {
     let car = JSON.parse(req.body.carData);
     const imageFile = req.file;
 
-    // Upload Image to ImageKit
-    const fileBuffer = fs.readFileSync(imageFile.path);
-    const response = await imagekit.upload({
-      file: fileBuffer,
-      fileName: imageFile.originalname,
-      folder: "/cars",
+    if (!imageFile) {
+      return res.json({ success: false, message: "No image provided" });
+    }
+
+    // Upload image to Cloudinary
+    const result = await cloudinary.uploader.upload(imageFile.path, {
+      folder: "cars",
+      width: 1280,
+      crop: "scale",
+      format: "webp",
     });
 
-    // optimization through imagekit URL transformation
-    var optimizedImageUrl = imagekit.url({
-      path: response.filePath,
-      transformation: [
-        { width: "1280" }, // Width resizing
-        { quality: "auto" }, // Auto compression
-        { format: "webp" }, // Convert to modern format
-      ],
-    });
+    // Delete the temp file
+    fs.unlinkSync(imageFile.path);
 
-    const image = optimizedImageUrl;
+    const image = result.secure_url;
+
     await Car.create({ ...car, owner: _id, image });
 
     res.json({ success: true, message: "Car Added" });
@@ -98,10 +96,10 @@ export const deleteCar = async (req, res) => {
       return res.json({ success: false, message: "Unauthorized" });
     }
 
-    car.owner = null;  //* Remove owner reference
-    car.isAvaliable = false;  //* Set availability to false
+    car.owner = null; //* Remove owner reference
+    car.isAvaliable = false; //* Set availability to false
 
-    await car.save();  //* Important to save the changes
+    await car.save(); //* Important to save the changes
 
     res.json({ success: true, message: "Car Removed" });
   } catch (error) {
@@ -155,38 +153,35 @@ export const getDashboardData = async (req, res) => {
   }
 };
 
-// API to update user image in the ImageKit
+// API to update user image in the Cloudinary
 
 export const updateUserImage = async (req, res) => {
   try {
     const { _id } = req.user;
-
     const imageFile = req.file;
+    console.log("req.file:", req.file);
+    if (!imageFile) {
+      return res.json({ success: false, message: "No image provided" });
+    }
+    console.log("Image path:", imageFile.path);
 
-    // Upload Image to ImageKit
-    const fileBuffer = fs.readFileSync(imageFile.path);
-    const response = await imagekit.upload({
-      file: fileBuffer,
-      fileName: imageFile.originalname,
-      folder: "/users",
+    const result = await cloudinary.uploader.upload(imageFile.path, {
+      folder: "users",
+      width: 400,
+      crop: "scale",
+      format: "webp",
     });
 
-    // optimization through imagekit URL transformation
-    var optimizedImageUrl = imagekit.url({
-      path: response.filePath,
-      transformation: [
-        { width: "400" }, // Width resizing
-        { quality: "auto" }, // Auto compression
-        { format: "webp" }, // Convert to modern format
-      ],
-    });
+    if (fs.existsSync(imageFile.path)) {
+      fs.unlinkSync(imageFile.path);
+    }
 
-    const image = optimizedImageUrl;
-
+    const image = result.secure_url;
     await User.findByIdAndUpdate(_id, { image });
-    res.json({ success: true, message: "Image Updated" });
+
+    res.status(200).json({ success: true, message: "Image Updated" });
   } catch (error) {
     console.log(error.message);
-    res.json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };

@@ -53,7 +53,8 @@ const AddCar = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      const message = error.response?.data?.message || error.message;
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
@@ -149,7 +150,14 @@ const AddCar = () => {
               <option value="">Select a category</option>
               <option value="Sedan">Sedan</option>
               <option value="SUV">SUV</option>
-              <option value="Van">Van</option>
+              <option value="Luxury">Luxury</option>
+              <option value="Supercar">Supercar</option>
+              <option value="Sport">Sport</option>
+              <option value="Pickup Truck">Pickup Truck</option>
+              <option value="Minivan">Minivan</option>
+              <option value="Hatchback">Hatchback</option>
+              <option value="Convertible">Convertible</option>
+              <option value="Classic">Classic</option>
             </select>
           </div>
         </div>
@@ -207,11 +215,29 @@ const AddCar = () => {
             value={car.location}
             className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none"
           >
-            <option value="">Select a location</option>
-            <option value="New York">New York</option>
-            <option value="Los Angeles">Los Angeles</option>
-            <option value="Houston">Houston</option>
-            <option value="Chicago">Chicago</option>
+            <option value="">Select a locality</option>
+            <option value="Kankarbagh">Kankarbagh</option>
+            <option value="Boring Road">Boring Road</option>
+            <option value="Bailey Road">Bailey Road</option>
+            <option value="Gandhi Maidan">Gandhi Maidan</option>
+            <option value="Fraser Road">Fraser Road</option>
+            <option value="Patliputra Colony">Patliputra Colony</option>
+            <option value="Ashiana Digha Road">Ashiana Digha Road</option>
+            <option value="Rajendra Nagar">Rajendra Nagar</option>
+            <option value="Kadam Kuan">Kadam Kuan</option>
+            <option value="Kidwaipuri">Kidwaipuri</option>
+            <option value="Kurji">Kurji</option>
+            <option value="Anisabad">Anisabad</option>
+            <option value="Phulwari Sharif">Phulwari Sharif</option>
+            <option value="Danapur">Danapur</option>
+            <option value="Digha">Digha</option>
+            <option value="Rukanpura">Rukanpura</option>
+            <option value="Rajbansi Nagar">Rajbanshi Nagar</option>
+            <option value="Indrapuri">Indrapuri</option>
+            <option value="Khajpura">Khajpura</option>
+            <option value="Samanpura">Samanpura</option>
+            <option value="Lohia Nagar">Lohia Nagar</option>
+            <option value="Buddha Colony">Buddha Colony</option>
           </select>
         </div>
         {/* Car Description */}

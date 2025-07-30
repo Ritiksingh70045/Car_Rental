@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;  // Use of baseURL is important to set the base URL for all axios requests
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL; // Use of baseURL is important to set the base URL for all axios requests
 
 export const AppContext = createContext();
 
@@ -65,7 +65,8 @@ export const AppProvider = ({ children }) => {
   // useEffect to fetch user data when token is available
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common["Authorization"] = `${token}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
       fetchUser();
     }
   }, [token]);

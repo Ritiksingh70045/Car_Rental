@@ -1,7 +1,10 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
-import "dotenv/config";
+import cookieParser from 'cookie-parser';
 import cors from "cors";
 import connectDB from "./configs/db.js";
+import {connectCloudinary} from "./configs/cloudinary.js";
 import userRouter from "./routes/userRoutes.js";
 import ownerRouter from "./routes/ownerRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
@@ -11,10 +14,19 @@ const app = express();
 
 // Connect Database
 await connectDB();
+await connectCloudinary();
 
 // Middleware
-app.use(cors());
+const allowedOrigins = ["http://localhost:5173"];
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => res.send("Server is running"));
 app.use("/api/user", userRouter);
