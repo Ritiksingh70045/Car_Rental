@@ -52,11 +52,28 @@ const Hero = () => {
               onChange={(e) => setPickupLocation(e.target.value)}
             >
               <option value="">Pickup Location</option>
-              {cityList.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
+              <option value="Kankarbagh">Kankarbagh</option>
+              <option value="Boring Road">Boring Road</option>
+              <option value="Bailey Road">Bailey Road</option>
+              <option value="Gandhi Maidan">Gandhi Maidan</option>
+              <option value="Fraser Road">Fraser Road</option>
+              <option value="Patliputra Colony">Patliputra Colony</option>
+              <option value="Ashiana Digha Road">Ashiana Digha Road</option>
+              <option value="Rajendra Nagar">Rajendra Nagar</option>
+              <option value="Kadam Kuan">Kadam Kuan</option>
+              <option value="Kidwaipuri">Kidwaipuri</option>
+              <option value="Kurji">Kurji</option>
+              <option value="Anisabad">Anisabad</option>
+              <option value="Phulwari Sharif">Phulwari Sharif</option>
+              <option value="Danapur">Danapur</option>
+              <option value="Digha">Digha</option>
+              <option value="Rukanpura">Rukanpura</option>
+              <option value="Rajbansi Nagar">Rajbanshi Nagar</option>
+              <option value="Indrapuri">Indrapuri</option>
+              <option value="Khajpura">Khajpura</option>
+              <option value="Samanpura">Samanpura</option>
+              <option value="Lohia Nagar">Lohia Nagar</option>
+              <option value="Buddha Colony">Buddha Colony</option>
             </select>
             <p className="px-1 text-sm text-gray-500">
               {pickupLocation ? pickupLocation : "Please select location"}

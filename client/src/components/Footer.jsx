@@ -17,14 +17,7 @@ const Footer = () => {
         className="flex flex-wrap justify-between items-start gap-8 pb-6 border-borderColor border-b"
       >
         <div>
-          <motion.img
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            src={assets.logo}
-            alt="logo"
-            className="h-8 md:h-9"
-          />
+          <p className="text-3xl font-bold text-black">Gear<span className="text-primary">Share</span></p>
 
           <motion.p
             initial={{ opacity: 0 }}
@@ -116,8 +109,8 @@ const Footer = () => {
             </h2>
             <ul className="mt-3 flex flex-col gap-1.5">
               <li>1234 Luxury Drive</li>
-              <li>San Francisco, CA 94107</li>
-              <li>+1 234 567890</li>
+              <li>Mrinul Palace, Boring Road , Patna</li>
+              <li>+91 1234567890</li>
               <li>info@example.com</li>
             </ul>
           </div>

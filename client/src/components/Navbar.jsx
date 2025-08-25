@@ -36,13 +36,8 @@ const Navbar = () => {
         location.pathname === "/" && "bg-light"
       }`}
     >
-      <Link to="/">
-        <motion.img
-          whileHover={{ scale: 1.05 }}
-          src={assets.logo}
-          alt="logo"
-          className="h-8"
-        />
+      <Link to="/" className="text-3xl font-bold text-black">
+        Gear<span className="text-primary">Share</span>
       </Link>
 
       <div
@@ -67,7 +62,17 @@ const Navbar = () => {
 
         <div className="flex max-sm:flex-col items-start sm:items-center gap-6">
           <button
-            onClick={() => (isOwner ? navigate("/owner") : changeRole())}
+            onClick={() => {
+              if (isOwner) {
+                navigate("/owner");
+              } else {
+                changeRole();
+              }
+
+              // if (!user) {
+              //   toast.error("Please Login First");
+              // }
+            }}
             className="cursor-pointer"
           >
             {isOwner ? "Dashboard" : "List cars"}

@@ -159,11 +159,11 @@ export const updateUserImage = async (req, res) => {
   try {
     const { _id } = req.user;
     const imageFile = req.file;
-    console.log("req.file:", req.file);
+    // console.log("req.file:", req.file);
     if (!imageFile) {
       return res.json({ success: false, message: "No image provided" });
     }
-    console.log("Image path:", imageFile.path);
+    // console.log("Image path:", imageFile.path);
 
     const result = await cloudinary.uploader.upload(imageFile.path, {
       folder: "users",

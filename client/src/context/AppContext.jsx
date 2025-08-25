@@ -53,14 +53,18 @@ export const AppProvider = ({ children }) => {
     setIsOwner(false);
     axios.defaults.headers.common["Authorization"] = "";
     toast.success("You have been logged out");
+    navigate("/");
   };
 
   // useEffect to retrieve the token from localStorage
   useEffect(() => {
     const token = localStorage.getItem("token");
     setToken(token);
-    fetchCars();
   }, []);
+
+  useEffect(() => {
+    fetchCars();
+  }, [cars]);
 
   // useEffect to fetch user data when token is available
   useEffect(() => {
